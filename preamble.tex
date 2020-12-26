@@ -26,25 +26,7 @@
 % Shortcuts
 
 % % Local to this project
-\DeclareMathOperator{\spec}{Spec}
-\DeclareMathOperator{\SP}{Sp}
-\newcommand{\AFF}{\mathbf{Aff}}
-\renewcommand\labelitemi{--}
-\newcommand{\SUB}{\mathbf{Sub}}
-\DeclareMathOperator{\ideal}{Ideal}
-\DeclareMathOperator{\open}{Open}
-\newcommand{\zar}{\mathrm{Zar}}
-\DeclareMathOperator{\cov}{Cov}
-\newcommand{\pts}{\mathrm{Pts}}
-\newcommand{\MFD}{\mathbf{Mfd}}
-\newenvironment{proof1}{
-  \begin{proof}\renewcommand\qedsymbol{$\blacksquare$}
-}{
-  \end{proof}
-} % Proofs ending with black qedsymbol 
-\newcommand{\SCH}{\mathbf{Sch}}
-\newcommand{\PROP}{\mathbf{Prop}}
-\DeclareMathOperator{\mor}{Mor}
+\renewcommand\labelitemi{--} % Makes itemize use dashes instead of bullets
 
 % % Misc
 \newcommand{\brkt}[1]{\left(#1\right)}
@@ -379,11 +361,11 @@
 \theoremstyle{remarkstyle}
 \newtheorem{rmk}{Remark}
 
-\newenvironment{idea}{
-  \begin{proof}[Idea]
+\newenvironment{proof1}{
+  \begin{proof}\renewcommand\qedsymbol{$\blacksquare$}
 }{
   \end{proof}
-} % Environment for ideas of proofs. 
+} % Proofs ending with black qedsymbol 
 
 % % tikzcd diagram 
 \newenvironment{cd}{
