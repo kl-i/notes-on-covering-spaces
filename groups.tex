@@ -1,0 +1,177 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+  
+\begin{prop}[Decomposition to Path-Connected Components]
+  
+  Let $B\in\TOP$ be locally path connected and semi-locally simply connected.
+  Let $B = \bigsqcup_{B_i \in I} B_i$ where $I$ is the set of 
+  path-connected components of $B$.
+  Then \begin{enumerate}
+    \item $\Pi_1 B \simeq \coprod_{B_i \in I} (\Pi_1 B_i)$.
+    \item we have a commutative square 
+    \begin{cd}
+      \COV(B) \ar[d,"\simeq"{swap}] \ar[r,"\simeq"]
+        & \Pi_1 B\SET \ar[d,"\simeq"]\\
+      \prod_{B_i \in I} \COV(B_i) \ar[r,"\simeq"]
+        & \prod_{B_i \in I} \Pi_1 B_i \SET
+    \end{cd}
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  \textit{(1)} ok. 
+  \textit{(2)} The square commutes. 
+  By base change of covering space,
+  we get the functor $\COV(B) \to \prod_{B_i \in I} \COV(B_i)$. 
+  For full and faithful, note that every $X \in \COV(B)$ is 
+  isomorphic to $\coprod_{B_i \in I} X_i$ where 
+  $X_i$ is the preimage of $B_i$.
+  Essentially surjective is okay and 
+  this shows left vertical functor is equivalence. 
+  The other vertical equivalence and the bottom horizontal equivalence 
+  are formal. 
+
+\end{proof}
+
+\begin{rmk}
+  The above justifies restricting to the case with 
+  the additional assumption of $B$ path connected. 
+\end{rmk}
+
+\begin{prop}[Fundamental Theorem of Covering Spaces (Groups Version)]
+  
+  Let $B \in \TOP$ be path connected.
+  For $b \in B$, 
+  use $\pi_1(B,b)$ to refer to the 
+  single object category consisting of $b$ and 
+  automorphisms in $\Pi_1 B$ as the only morphisms.
+  Then for any $b \in B$, 
+  there's an equivalence of categories \[
+    \pi_1(B,b) \overset{\simeq}{\to} \Pi_1 B
+  \]
+  which induces an equivalence of categories : 
+  \[
+    \Pi_1 B \SET \overset{\simeq}{\to} \pi_1(B,b)\SET
+  \]
+
+  Thus, when $B$ is path connected, locally path connected,
+  semi-locally simply connected, 
+  we have equivalence of categories :
+  \begin{cd}
+    \COV(B) \ar[r,"\FIB","\simeq"{swap}] \ar[dr,"\FIB(b)"{swap}]
+      & \Pi_1B\SET \ar[d,"\simeq"] \\
+      & \pi_1(B,b)\SET
+  \end{cd}
+  where 
+  \begin{enumerate}
+    \item the equivalence restricts to 
+    an equivalence between path connected coverings of $B$ and 
+    transitive $\pi_1(B,b)$-actions. 
+    We call $\FIB_X(b)$ a \emph{$\pi_1(B,b)$-torsor}.
+    \item for $X \in \COV(B)$ path connected and any $x \in \FIB_X(b)$, 
+    we have \[
+      \AUT_{\COV(B)} X \iso 
+      \AUT_{\pi_1(B,b)} \FIB_X(b) \iso 
+      N\stab(x)/\stab(x)
+    \]
+    In particular, 
+    $\AUT_{\COV(B)}(X)$ acts transitively on $\FIB_X(b)$ 
+    if and only if $\stab(x)$ is normal in $\pi_1(B,b)$.
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  The forgetful functor $\pi_1(B,b) \to \Pi_1B$ is fully faithful
+  and is essentially surjective because $B$ is path connected.
+  $\Pi_1 B \SET \simeq \pi_1(B,b)\SET$ is formal.
+  For $\FIB(b) : \COV(B) \to \pi_1(B,b)\SET$ being an equivalence,
+  note that a composition of equivalences form an equivalence. 
+
+  \textit{(1)}
+  Now let $X \in \COV(B)$.
+  $X$ is path connected if and only if $\FIB_X$ is a transitive 
+  $\Pi_1B$-action. 
+  This implies $\FIB_X(b)$ is a transitive $\pi_1(B,b)$-action. 
+  Conversely, $B$ path connected implies 
+  that any two fibers $\FIB_X(b), \FIB_X(b_1)$ biject by some 
+  $\FIB_X[\ga]$ with $[\ga] \in \Pi_1B (b,b_1)$ so 
+  $\FIB_X(b)$ being a transitive $\pi_1(B,b)$-action gives the desired result.
+  
+  \textit{(2)}
+  Let $X \in\COV(B)$ be path connected and $x \in \FIB_X(b)$.
+  $\AUT_{\COV(B)} X \iso \AUT_{\pi_1(B,b)} \FIB_X(b)$ comes from 
+  the equivalence of categories. 
+  For $\AUT_{\pi_1(B,b)} \FIB_X(b) \iso N\stab(x)/\stab(x)$
+  and the in particular,
+  this is a general group theoretic fact : 
+  \begin{lem}[Automorphisms of Non-empty Transitive Actions]
+    Let $G \in \GRP$ and $X \in G\SET$ be transitive and $x \in X$.
+    Then 
+    \begin{enumerate}
+      \item $\AUT_{G\SET} X \iso N\stab(x)/\stab(x)$.
+      \item $\AUT_{G\SET} X$ acts transitively on $X$ if and only if 
+      $N\stab(x) = G$.
+    \end{enumerate}
+    \begin{proof1}
+      \textit{(1)} Define : 
+      \begin{align*}
+        N\stab(x) \to \AUT_{G\SET} X,
+        \si \mapsto (\si_0(x) \mapsto (\si_0 \circ \si)(x))
+      \end{align*}
+      The group morphism is well-defined 
+      because $\stab(x)$ is normal in $N\stab(x)$.
+      To show surjective, 
+      let $\ph \in \AUT_{G\SET} X$.
+      Since $X$ is a transitive $G$-set,
+      $\ph$ is determined by what it does to $x$.
+      There exists $\si \in G$ with $\si(x) = \ph(x)$.
+      It suffices to show $\si \in N\stab(x)$. 
+      This is true by a quick computation.
+      It is clear that the kernel of the group morphism is 
+      $\stab(x)$ so we have the desired group isomorphism.
+
+      \textit{(2)} Assume $\AUT_{G\SET} X$ acts transitively on $X$.
+      Let $\si \in G$. Then there exists $\si_0 \in N\stab(x)$
+      such that $\si_0(x) = \si(x)$.
+      It follows that $\si \in \si_0 \stab(x) \subs N\stab(x)$.
+      The converse is clear. 
+    \end{proof1}
+  \end{lem}
+\end{proof}
+
+\begin{rmk}
+  The following is good for computing fundamental groups.
+\end{rmk}
+
+\begin{prop}[Universal Cover]
+  
+  Let $B \in \TOP$ be path connected, locally path connected,
+  semi-locally simply connected.
+  Let $b \in B$ and consider $\pi_1(B,b)$ with 
+  the obvious left action on itself. 
+  Then for $X \in \COV(B)$, TFAE : 
+  \begin{enumerate}
+    \item $\FIB_X(b)$ is a non-empty, transitive and free $\pi_1(B,b)$-action,
+    in other words, $\FIB_X(b) \iso \pi_1(B,b)$ as $\pi_1(B,b)$-sets.
+    \item $X$ is path connected and 
+    there exists $x \in \FIB_X(b)$ with $\pi_1(X,x)$ is trivial. 
+  \end{enumerate}
+  We call $X$ \emph{universal} when it satisfies any 
+  (and thus both) of the above.
+  In this case, \[
+    \AUT_{\COV(B)} X \iso \AUT_{\pi_1(B,b)} \pi_1(B,b)
+    \iso \pi_1(B,b)
+  \]
+  Such an $X$ exists by the fundamental theorem.
+  
+\end{prop}
+\begin{proof}
+  
+  \textit{$(1 \iff 2)$}
+  $\pi_1(B,b)$ is a transitive $\pi_1(B,b)$-set 
+  if and only if $X$ is path connected.
+  For any $x \in \FIB_X(b)$,
+  $\pi_1(X,x) \iso \stab(x)$.
+  The result follows.
+
+\end{proof}
+
+\end{document}

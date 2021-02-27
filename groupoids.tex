@@ -1,0 +1,461 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+\begin{dfn}[Lift]
+  
+  Let $B \in \TOP$, $X \to B$, $Y \to B$ in $\TOP$.
+  Then a \emph{lift} of $Y \to B$ along $X \to B$ is 
+  a morphism $f \in \TOP\darrow B(Y,X)$.
+\end{dfn}
+
+\begin{prop}[Monodromy Functor]
+  
+  Let $B \in \TOP$ be locally path connected and $X \in \COV(B)$.
+  (It follows that $X$ is locally path connected.)
+  Then the \emph{monodromy functor of $X$} is defined as the $\Pi_1(B)$-set : 
+  \begin{align*}
+    \FIB_X : \Pi_1(B) &\to \SET \\
+    b &\mapsto \downarrow\inv b \\
+    [\ga] &\mapsto \FIB_X([\ga]) : 
+      \downarrow\inv s(\ga) \to \downarrow\inv t(\ga), 
+      x \mapsto \ga_x(1)
+  \end{align*}
+  where $\ga_x$ is any lift of any representative of $[\ga]$,
+  such that $\ga_x(0) = x$.
+  This gives rise to a functor : 
+  \[
+    \FIB : \COV(B) \to \SET^{\Pi_1 B}
+  \]
+  Furthermore, for each $X \in \COV(B)$, 
+  we can recover the fundamental groupoid of $X$ via 
+  \[
+    \int_{\Pi_1(B)} \FIB_X \simeq \Pi_1(X) 
+  \]
+  where the former is the category of elements of $\FIB_X$.
+  Hence \begin{itemize}
+    \item $X$ is path-connected if and only if 
+    $\FIB_X$ is transitive, 
+    i.e. for all $(b,x),(b_1,x_1) \in \int_{\Pi_1(B)} \FIB_X$,
+    there exists a morphism $[\ga]$ of $\Pi_1(B)$ such that 
+    $\FIB_X([\ga])(x) = x_1$.
+    \item for all $(b,x) \in \int_{\Pi_1(B)} \FIB_X$,
+    the induced group morphism $\pi_1(X,x) \to \pi_1(B,b)$
+    maps $\pi_1(X,x)$ isomorphically to $\stab(x)$.
+  \end{itemize}
+\end{prop}
+\begin{proof}
+  
+  To define the $\Pi_1(B)$-action on fibres,
+  we need to be able to lift paths uniquely \emph{and}
+  for path-homotopies to lift. 
+  This is exactly what the local trivisalisations of coverings 
+  allow us to achieve.
+  We first prove paths lift uniquely. 
+  \begin{lem}[Unique Path Lifting]
+    Let $B \in \TOP$, $X \in \COV(B)$.
+    Then $X$ satisfies \emph{unique path lifting},
+    meaning for all commuting squares of the form : 
+    \begin{cd}
+      \bullet \ar[d,"0"{swap}] \ar[r]
+        & X \ar[d] \\
+      I \ar[r] \ar[ru,dashed,"!"]
+        & B
+    \end{cd}
+    there exists a unique morphism in the diagonal 
+    such that the whole diagram commutes. 
+    Such a diagonal morphism is called a \emph{lift}
+    of the morphism $I \to B$.
+    \begin{proof1}
+      Let $\ga : I \to B$ and $x \in X$ in the fibre over $\ga(0)$.
+      Then there exists a set $\UU$ consisting of opens of $B$
+      trivialising $X$ such that $\ga I \subs \bigcup \UU$. 
+
+      The idea is that each $U \in \UU$ allows us to lift a part of $\ga I$
+      and compactness of $I$ allows for induction. 
+      Since $I$ is compact, there exists a partition 
+      $\set{0 = t_0 < \cdots < t_n = 1}$ of $I$
+      such that for each $t_i < t_n$, 
+      $\ga [t_i,t_{i+1}]$ is in some $U_i \in \UU$.
+      Suppose by induction we have a unique lift 
+      $\bar{\ga_{n-1}} : [0,t_{n-1}] \to X$ of $\ga : [0,t_{n-1}] \to B$.
+      Let $U_n \in \UU$ with $\ga [t_{n-1},t_n] \subs U_n$.
+      Let $s_n : U_n \to X$ be a section such that 
+      $\bar{\ga_{n-1}}(t_{n-1}) \in s_n U_n$. 
+      The define a lift $\bar{\ga} : I \to X$ by patching together 
+      $\bar{\ga_{n-1}}$ and $s_n \circ \res{\ga}{[t_{n-1},t_n]}$. 
+      This lift is unique because 
+      any lift $\tilde{\ga} : I \to X$ of $\ga$
+      must restrict to a lift of $\ga : [0,t_{n-1}] \to B$,
+      and thus $\res{\tilde{\ga}}{[0,t_{n-1}]} = \bar{\ga_{n-1}}$
+      by uniqueness of $\bar{\ga_{n-1}}$ and 
+      finally $\tilde{\ga}$ must also agree with $\bar{\ga}$ on 
+      $[t_{n-1},t_n]$ since $\tilde{\ga}[t_{n-1},t_n] \subs s_n U_n$ 
+      and $s_n$ is a homeomorphism onto its image. 
+    \end{proof1}
+  \end{lem}
+  For lifting homotopies, we prove a more general lemma : 
+  \begin{lem}[Unique Homotopy Lifting]
+    Let $B \in \TOP$ be locally path connected and $X \in \COV(B)$.
+    (It follows that $X$ is also locally path connected.)
+    Then $X$ satisfies \emph{unique homotopy lifting with respect to 
+    locally connected spaces}, 
+    meaning for all commuting squares 
+    \begin{cd}
+      Y \ar[d,"\id{Y} \times 0"{swap}] \ar[r]
+        & X \ar[d] \\
+      Y \times I \ar[r] \ar[ru,dashed,"!"]
+        & B
+    \end{cd}
+    where $Y$ is locally connected, 
+    there exists a unique morphism in the diagonal 
+    such that the diagram commutes. 
+    Such a morphism is called a \emph{lift} of 
+    the morphism $Y \times I \to B$.
+    \begin{proof1}
+
+      \textit{(Existence)}
+      \textit{(Local Lifts)}
+      Let $y \in Y$.
+      We show the existence of an open neighbourhood $U_y$ of $y$
+      with a lift $\bar{H}_y : V_y \times I \to X$ 
+      of $H : U_y \times I \to B$.
+      Let $\UU$ be an open cover of $B$ trivialising $X$.
+      Since $B$ is locally path connected, 
+      we can WLOG assume $\UU$ consists of path connected opens. 
+      Now, for every $t \in I$, 
+      there exists $\ep_t > 0$ and $V_t$ open neighbourhood of $y$ such that 
+      $H V_t \times [t-\ep_t,t+\ep_t] \subs U_t$ for some $U_t \in \UU$.
+      By compactness of $I$, 
+      there exists a partition $\set{0 = t_0 < \dots < t_n = 1}$ of $I$
+      and open neighbourhoods $(V_i)$ of $y$ such that 
+      $H V_i \times [t_i,t_{i+1}] \subs U_i$ for some $U_i \in \UU$.
+      We can now take $V_y = \bigcap_i V_i$ as 
+      a single open neighbourhood of $y$ such that 
+      $H V_y \times [t_i,t_{i+1}] \subs U_i$ for some $U_i \in \UU$.
+      We construct a lift $\bar{H}_y$ inductively.
+      By local connectedness of $Y$,
+      we can WLOG assume $V_y$ is connected, which we will use. 
+      Suppose by induction we have a lift 
+      $\tilde{H} : V_y \times [0,t_{n-1}] \to X$
+      of $H : V_y \times [0,t_{n-1}] \to X$. 
+      Let $U_n \in \UU$ that covers $H V_y \times [t_{n-1},t_n]$.
+      By connectedness of $V_y$,
+      $\tilde{H} V_y \times t_{n-1}$ lies within 
+      the image of a section $s_n : U_n \to X$. 
+      Hence we can define a lift $\bar{H} : V_y \times I \to X$
+      by patching together $\tilde{H}$ and 
+      $s_n \circ \res{H}{V_y \times [t_{n-1},t_n]}$.
+      
+      \textit{(Global Lift)}
+      We have an open cover $\YY$ of $Y$ 
+      and for each $V \in \YY$ a lift $\bar{H}_V: V \times I \to X$
+      of $H : V \times I \to B$.
+      For any two $V, W \in \YY$,
+      $\bar{H}_V$ and $\bar{H}_W$ both restrict to 
+      lifts of $V \times I \cap W \times I = (V \cap W)\times I$. 
+      But these give lifts of paths starting in $V \cap W$ and 
+      lifts of paths are unique by the previous lemma,
+      so $\bar{H}_V$ and $\bar{H}_W$ agree on $V\times I \cap W \times I$.
+      Thus these lifts patch togther to give a global lift 
+      $\bar{H} : Y \times I \to X$ of $H$.
+
+      \textit{(Uniqueness)}
+      Let $\bar{H}, \bar{H}_1 : Y \times I \to X$ be 
+      lifts of $H : Y \times I \to B$. 
+      Again, these restrict to lifts of paths ${y} \times I \to B$,
+      which are unique by the previous lemma 
+      so $\bar{H} = \bar{H}_1$.
+      
+    \end{proof1}
+  \end{lem}
+  We can now define the $\Pi_1(B)$-action.
+  Let $[\ga]$ be a morphism in $\Pi_1(B)$.
+  Choose a representative $\ga$.
+  Define \[
+    \FIB_X([\ga]) : \darrow\inv s([\ga]) \to \darrow\inv t([\ga]) 
+    := x \mapsto \ga_x(1)
+  \]
+  where $\ga_x : I \to X$ is the unique lift of $\ga$ with $\ga_x(0) = x$.
+  We now need to show this is independent of the choice of $\ga$.
+  Let $\ga^1$ be another representative of $[\ga]$.
+  So we have a homotopy $H : I \times I \to B$ from  
+  $\ga$ to $\ga^1$ that fixes endpoints. 
+  Since $I$ is locally connected, we have a lift : 
+  \begin{cd}
+    I \ar[d,"\id{Y} \times 0"{swap}] \ar[r,"\ga_x"]
+      & X \ar[d] \\
+    I \times I \ar[r,"H"] \ar[ru,dashed,"\bar{H}"]
+      & B
+  \end{cd}
+  We hope that $\bar{H}$ gives a path-homotopy.
+  Well, \begin{enumerate}
+    \item Restricted to $0 \times I$, 
+    $\bar{H}$ gives a lift of the constant point $s([\ga])$.
+    By uniqueness of path lifting, $\bar{H}$ must be 
+    constant along $0 \times I$.
+    Similarly, $\bar{H}$ is the constant point $t([\ga])$
+    along $1 \times I$.
+    \item Now restricted to $I \times 1$, 
+    $\bar{H}$ gives a lift of $\ga^1$ starting at $s([\ga])$.
+    By uniquenss of path lifting, 
+    $\bar{H}$ must be $\ga^1_x$ along $I \times 1$.
+  \end{enumerate}
+  Hence, $\bar{H}$ is indeed a homotopy from $\ga_x$ to $\ga^1_x$
+  fixing end points,
+  i.e. $[\ga_x] = [\ga^1_x]$.
+  In particular, $\ga_x(1) = \ga^1_X(1)$ so 
+  $\FIB_X([\ga])(x)$ is well-defined. 
+
+  \textit{($\FIB$)}
+  Let $f \in \COV(Y,X)$.
+  Then indeed for every morphism $[\ga]$ in $\Pi_1(B)$,
+  we have \begin{cd}
+    \FIB_X(s(\sqbrkt{\ga})) \ar[d,"\FIB_X(\sqbrkt{\ga})"] \ar[r,"f"]
+      & \FIB_Y(s(\sqbrkt{\ga})) \ar[d,"\FIB_Y(\sqbrkt{\ga})"] \\
+    \FIB_X(t(\sqbrkt{\ga})) \ar[r,"f"]
+      & \FIB_Y(t(\sqbrkt{\ga})) \\
+  \end{cd}
+  since for every $x$ in the fibre over the source of $[\ga]$
+  and any lift $\ga_x$ of $[\ga]$ starting at $x$,
+  $f \circ \ga_x$ is a lift of $[\ga]$ starting at $f(x)$.
+
+  \textit{(Furthermore)}
+  We describe the functor $\int_{\Pi_1(B)} \FIB_X \to \Pi_1(X)$ :
+  \begin{itemize}
+    \item for each object $(b,x)$, map it to $x$.
+    \item for each morphism $[\ga] \in \int_{\Pi_1(B)} \FIB_X ((b,x),(b_1,x_1))$,
+    map it to $[\ga_x]$ where 
+    $\ga_x$ is any lift of $\ga$ starting at $x$.
+    We have seen this is well-defined and 
+    by the assumption of $\FIB_X([\ga])(x) = x_1$,
+    $[\ga_x] \in \Pi_1(X)(x,x_1)$ indeed.
+    \item Functoriality follows from uniqueness of path liftings.
+  \end{itemize}
+  The functor is clearly essentially surjective.
+  Faithfulness comes from projecting paths 
+  back down $\Pi_1(X) \to \Pi_1(B)$.
+  We have seen fullness. 
+
+  \textit{(Hence)} Straightforward. 
+\end{proof}
+
+\begin{rmk}
+  The monodromy functor gives one side of the equivalence
+  $\COV(B) \simeq \SET^{\Pi_1 B}$.
+  For the quasi-inverse functor to exist,
+  the extra condition on $B$ is the following,
+  which says that ``there are enough opens $U$ of $B$ which are 
+  determined by their fundamental groupoids''.
+\end{rmk}
+
+\begin{lem}[Characterisation of Semi-Locally Simply Connected]
+  
+  Let $B \in \TOP$ locally path connected.
+  Given an open $U$ of $B$ and $b \in U$, TFAE : 
+  \begin{enumerate}
+    \item $U$ is path connected and 
+    the obvious morphism $\pi_1(U,b) \to \pi_1(B,b)$ is trivial.
+    \item The following being a bijection : 
+    \[
+      b\darrow \Pi_1U \to U
+    \] 
+  \end{enumerate}
+  When $U$ and $b$ satisfies any (and thus both) of the above,
+  call $b$ a \emph{centre} of $U$.
+  If $U$ satisfies the above \emph{for some} $b \in U$,
+  then call $U$ a \emph{centred} open.\footnote{
+    I made up this terminology to avoid 
+    repeating long phrases in the proof.
+  }
+  Then TFAE : 
+  \begin{enumerate}
+    \item There exists an open cover $\UU$ of $B$ consisting of 
+    $U$ such that every $b \in U$ is a centre of $U$.
+    \item For every $b \in B$, 
+    there is a neighbourhood base of opens $U$ 
+    with $b$ as a centre. 
+    \item There exists a cover $\UU$ of $B$ consisting of 
+    centred opens. 
+  \end{enumerate}
+  We say $B$ is \emph{semi-locally simply connected} 
+  when it satisfies any (and thus all) of the above. 
+\end{lem}
+\begin{proof}
+
+  \textit{($1 \iff 2$ for $U$ and $b$)}
+  $U$ being path connected corresponds to 
+  $b\darrow \Pi_1U \to U$ being surjective.
+  It suffices to prove $\pi_1(U,b) \to \pi_1(B,b)$ trivial 
+  if and only if $b\darrow \Pi_1U \to U$ injective.
+  Forwards, given two morphisms $[\ga],[\ga_1]$ in $\Pi_1 U$ 
+  with source at $b$ and same target,
+  $[\ga]\inv [\ga_1] \in \pi_1(U,b)$.
+  Triviality of $\pi_1(U,b) \to \pi_1(B,b)$ implies 
+  $[\ga] = [\ga_1]$ as morphisms in $\Pi_1 B$, in particular in $\Pi_1 U$.
+  The converse is easy. 
+  
+  Now for equivalent conditions of $B$ semi-locally simply connected.
+  $(1 \implies 2)$ Use local path connectedness of $B$ and functoriality 
+  of $\pi_1(-,b)$.
+  $(2 \implies 3)$ Obvious. 
+  $(3 \implies 1)$
+  Let $\UU$ be an open cover of $B$ such that 
+  for all $U \in \UU$, there exists a centre $b$ of $U$.
+  It suffices to show for other $b_1 \in U$,
+  $\pi_1(U,b_1) \to \pi_1(B,b_1)$ is also trivial. 
+  By assumption, there exists $[\ga] \in \Pi_1U(b,b_1)$,
+  so we have a commutative square
+  \begin{cd}
+    \pi_1(U,b) \ar[d,"\iso"{swap}] \ar[r,"1"]
+      & \pi_1(X,b) \ar[d,"\iso"] \\
+    \pi_1(U,b_1) \ar[r]
+      & \pi_1(X,b_1) \\
+  \end{cd}
+  where the vertical maps are ``conjugation'' by $[\ga]$.
+  This proves the bottom horizontal morphism is trivial. 
+
+\end{proof}
+
+\begin{prop}[Fundamental Theorem of Covering Spaces
+  \footnote{As called on nLab page on covering space.}]
+  
+  Let $B \in \TOP$ be locally path connected and 
+  semi-locally simply connected.
+  Consider the functor $\int_{\Pi_1 B} : \SET^{\Pi_1 B} \to \SET \darrow B$
+  that sends $X$ to its category of elements $\int_{\Pi_1 B} X$,
+  which we then view as a set with a set-morphism down to $B$.
+  Then \begin{enumerate}
+    \item we can promote the $\int_{\Pi_1 B}$ to a functor 
+    $\SET^{\Pi_1 B} \to \COV B$. 
+    \item $\int_{\Pi_1 B}$ and $\FIB$ form an 
+    equivalence of categories \[
+      \COV(B) \simeq \SET^{\Pi_1 B}
+    \]
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  \textit{(1)}
+  Let $\rho \in \SET^{\Pi_1 B}$.
+  By assumption, $B$ has a topological base of centred opens. 
+  These will give the topology on $\int_{\Pi_1 B} \rho$ 
+  as well as the trivialising opens of the projection. 
+
+  \textit{(1)(Topology)}
+  For $(b,x) \in  \int_{\Pi_1 B} \rho$ and 
+  an open $U$ of $B$ centred at $b$,
+  define \[
+    U[b,x] := \set{\rho([\ga](x) \st [\ga] \in b \darrow \Pi_1 U}
+  \]
+  Then the set of these give a topological base 
+  because centred opens form a topological base for $B$.
+  We topologise $\int_{\Pi_1 B} \rho$ using this topological base.
+
+  \textit{(1)(Projection Topological)}
+  To show $\int_{\Pi_1 B} \rho \to B$ is a morphism of topological spaces,
+  since $B$ has centred opens as a topological base,
+  it suffices for each centred $U$, say at some $b$,
+  to have preimage \[
+    \darrow\inv U = \bigsqcup_{x \in \rho(b)} U[b,x]
+  \]
+  The equality is straight forward from $U$ being centred at $b$ and 
+  disjoint union follows from $\Pi_1 U$ being a groupoid. 
+
+  \textit{(1)(Covering)}
+  We saw already that $\darrow\inv U = \bigsqcup_{x \in \rho(b)} U[b,x]$
+  as sets. 
+  Since $\int_{\Pi_1 B} \rho$ has topology generated by 
+  the $V[b,x]$'s, 
+  to show $U[b,x] \to U$ is a topological isomorphism,
+  it suffices to show for all $U$ with centres $b$ and $x \in \rho(b)$,
+  $U[b,x]$ maps to $U$ bijectively. 
+  And it does because $U$ is centred!
+  
+  \textit{(1)(Functorial)}
+  Let $f \in \SET^{\Pi_1 B}(\rho,\rho_1)$.
+  We need to show the induced 
+  $f_* : \int_{\Pi_1 B} \rho \to \int_{\Pi_1 B} \rho_1$
+  is a topological morphism over $B$.
+  Suffices for basic opens $U[b,y]$ of $\int_{\Pi_1 B} \rho_1$
+  to have preimage \[
+    \darrow\inv U[b,y] = \bigcup_{x \in f_b\inv(y)} U[b,x]
+  \]
+  where $f_b : \rho(b) \to \rho_1(b)$.
+  $\sups$ is clear. 
+  Let $(b_1,x_1)$ be in the preimage of $U[b,y]$.
+  By definition, there exists $[\ga] \in \Pi_1 U(b,b_1)$ with 
+  $\rho[\ga](y) = f_{b_1}(x_1)$.
+  Then by naturality of $f$, we have 
+  \begin{cd}
+    \rho(b) \ar[d,"\rho\sqbrkt{\ga}"{swap}] \ar[r,"f_b"]
+      & \rho_1(b) \ar[d,"\rho_1\sqbrkt{\ga}"]\\
+    \rho(b_1) \ar[r,"f_{b_1}"]
+      & \rho_1(b_1)
+  \end{cd}
+  Since $\Pi_1 B$ is a groupoid, $\rho[\ga]$ are isomorphisms of sets,
+  so there exists $x \in \rho(b)$ with $\rho[\ga](x) = x_1$
+  and $f_b(x) = y$,
+  i.e. we have the other inclusion. 
+
+  \textit{(2)($\FIB \circ \int_{\Pi_1 B} \iso \id{}$)}
+  We know that $\FIB\brkt{\int_{\Pi_1 B} \rho}(b) = \rho(b)$
+  for $b \in \Pi_1 B$.
+  So it suffices that for all morphisms $[\ga]$ in $\Pi_1 B$,
+  \[ 
+    \FIB_{\int_{\Pi_1 B} \rho} [\ga] = \rho[\ga]
+  \]
+  which will actually show $\FIB \circ \int_{\Pi_1 B} = \id{}$.
+  The left is topological and right is algebraic. 
+  We bridge from left to right by using compactness of paths 
+  to break $[\ga]$ into finitely many pieces that 
+  lie within basic opens, where things are algebraic. 
+
+  Let $[\ga]$ be a morphism in $\Pi_1 B$. 
+  Since $B$ is semi-locally simply connected, 
+  we have an open cover $\UU$ of $B$ such that 
+  every $b \in U$ is a centre of $U$.
+  By compactness of $[0,1]$,
+  there exists morphisms $[\ga_0],\dots,[\ga_n]$ in $\Pi_1 B$
+  such that $[\ga] = [\ga_n] \circ \cdots \circ [\ga_0]$ and 
+  $[\ga_i]$ is $\Pi_1 U_i$ for some $U_i \in \UU$.
+  Let $x \in \rho(s[\ga]) = \rho(s[\ga_0])$.
+  By unique path lifting, 
+  \[ 
+    \brkt{\FIB_{\int_{\Pi_1 B} \rho}[\ga_0]} (x) \in 
+    U_0\sqbrkt{s[\ga_0],x} \cap \rho(t[\ga_0])
+    = U_0\sqbrkt{t[\ga_0],\rho[\ga_0](x)} \cap \rho(t[\ga_0])
+    = \set{\rho[\ga_0](x)}
+  \]
+  Thus $\brkt{\FIB_{\int_{\Pi_1 B} \rho}} [\ga_0](x)
+  = \rho[\ga_0](x)$.
+  The same goes for all $i$, giving 
+  \begin{align*}
+    \FIB_{\int_{\Pi_1 B} \rho}[\ga]
+    = \FIB_{\int_{\Pi_1 B} \rho}[\ga_n] \circ \cdots \circ 
+    \FIB_{\int_{\Pi_1 B} \rho}[\ga_0]
+    = \rho[\ga_n] \circ \cdots \circ \rho[\ga_0]
+    = \rho[\ga]
+  \end{align*}
+
+  \textit{(2)($\int_{\Pi_1 B} \circ \FIB \iso \id{}$)}
+  There's an obvious set isomorphism : 
+  \[
+    \int_{\Pi_1 B} \FIB_X \to X
+  \]
+  We have a topological base of $B$ consisting of centred opens,
+  which \emph{also} trivialise $X$,
+  so $X$ also has a topological base consisting of centred opens,
+  which map isomorphically down to centred opens of $B$.
+  Let us call such opens of $X$ basic for duration of the rest of the proof.
+  It suffices for preimage of basic opens of $X$ to be open. 
+  Let $U$ be a basic open of $X$ and $x$ a centre of $U$.
+  Let $b \in B$ be the projection of $x$ and $U_0$ the projection of $U$.
+  The claim is that the preimage of $U$ is $U_0[b,x]$. 
+  This is clear since 
+  \begin{cd}
+    U_0\sqbrkt{b,x} \ar[r] \ar[rd,"\iso"{swap}]
+      & U \ar[d,"\iso"{swap}] \\
+      & U_0
+  \end{cd}
+\end{proof}
+
+\end{document}

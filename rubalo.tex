@@ -1,0 +1,264 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+  
+
+
+\begin{prop}[Galois Covers]
+Let $X \to B$ be a covering. 
+For any group $G \subs \AUT_B X$, TFAE : 
+\begin{enumerate}
+  \item The canonical morphism from the quotient to $B$ is an isomorphism : 
+  \begin{cd}
+    X \ar[d] \ar[r]
+      & X / G \ar[ld,"\iso"]\\
+    B 
+      &
+  \end{cd}
+  \item For all $b \in B$, 
+  $G$ acts transitively on the fiber over $b$.
+\end{enumerate}
+The cover $X \to B$ is called \emph{Galois}
+when there exists a group $G \subs \AUT_B X$
+satisfying any (and thus both) of $(1), (2)$. 
+\footnote{
+  These are often also called \emph{normal covers}
+}
+Furthermore, if $X$ is connected,
+then any such $G = \AUT_B X$ and 
+the fibres are in fact $G$-torsors.\footnote{
+  One also says $X \to B$ is a \emph{principal $G$-bundle over $B$}.
+}
+
+\end{prop}
+\begin{proof}
+  $(1 \implies 2)$ ok.
+  $(2 \implies 1)$ $X \to B$ is an open map and the assumption 
+  is that the fiber over $b$ is exactly the orbit of $b$.
+
+  \textit{(Furthermore)}
+  We prove the following lemma : 
+  \begin{lem}[Amazing]
+    Let $X, Y \in \COV(B)$ of some $B \in \TOP$.
+    Suppose $\al, \be \in \COV(B)(X,Y)$ that agree on at least one point
+    and $X$ is connected.
+    Then $\al = \be$.
+    \begin{proof1}
+      Consider the pullback diagram :  
+      \begin{cd}
+        X \ar[d,"\al\times\be"{swap}]
+          & U \ar[l,"\sups"{swap}] \ar[d]\\
+        Y \times_B Y 
+          & Y \ar[l,"\De"]
+      \end{cd}
+      It suffices $U$ is all of $X$.
+      By assumption, $U \neq \nothing$
+      so connectedness of $X$ implies it suffices $\De(Y)$ is clopen.
+      Well, $Y \to B$ local homeomorphism implies 
+      $Y \to B$ is an open map, which implies $\De(Y)$ is open.
+      On the other hand, 
+      $Y \to B$ is separated so $\De(Y)$ is closed.
+    \end{proof1}
+  \end{lem}
+  
+  Now let $\si \in \AUT_B X$.
+  By the lemma, it suffices to give $x_0 \in X$ and $\si_0 \in G$ such that 
+  $\si(x_0) = \si_0(x_0)$.
+  By assumption, $G$ acts transitively on the fiber that $x_0$ is in
+  and $\si(x_0)$ is in the fibre so we gucci. 
+  A $G$-torsor is a non-empty, free and transitive $G$ action. 
+  The fibres are non-empty and transitive $G$-actions.
+  Freeness comes from the lemma. 
+
+\end{proof}
+
+\begin{lem}[Sufficient Condition for Galois Covers]
+
+  Let $X \in \TOP$, $G$ subgroup of $\AUT_\TOP X$.
+  Consider the propositions : 
+  \begin{enumerate}
+    \item $X \to X/G$ is a covering.
+    \item $G$ acts on $X$ \emph{evenly},
+    meaning for all $x \in X$, 
+    there exists an open neighbourhood $U^x$ of $x$ such that 
+    for all $\si,\si_1 \in G$, 
+    $\si \neq \si_1$ implies $\si U^x \cap \si_1 U^x = \nothing$.
+  \end{enumerate}
+  Then we have :
+  \begin{itemize}
+    \item $1 \limplies 2$
+    \item If $X$ connected and $X/G$ is locally connected,
+    $1 \implies 2$.
+    \item There exists $X$ disconnected with $1 \not\implies 2$.
+  \end{itemize}
+\end{lem}
+\begin{proof1}
+
+  $(1 \limplies 2)$
+  Let $x \in X$ and $U^x$ an open neighbourhood where 
+  ``$U^x$ separates the orbit of $x$''.
+  It suffices to show the preimage of the image of $U^x$ is 
+  $\bigcup_{\si \in G} \si U^x$.
+  This is clear.
+
+  $(1 \implies 2)$
+  Let $X$ connected and locally connected.
+  Let $x \in X$.
+  By assumption, there exists an open $U$ of $X/G$ such that 
+  we have the pullback diagram : 
+  \begin{cd}
+    X \ar[d]
+      & U \times \orb(x) \ar[d] \ar[l] \\
+    X/G 
+      & U \ar[l,"\sups"]
+  \end{cd}
+  The intuition is that
+  ``$G$ acts on the slices of $U$ in $U \times \orb(x)$ according 
+  its action on $\orb(x)$''.
+  We choose $U^x := $ image of $U \times \set{x}$.
+  Since $\orb(x) \iso G / \stab(x)$ as $G$-actions,
+  and $\stab(x)$ is trivial by connectedness of $X$,
+  we use locally connectedness of $X$ to show that 
+  for $\si \neq \id{X}$, 
+  we effectively have $\si U^x \cap U^x = \nothing$.
+
+  Well, $X/G$ is locally connected, so by shrinking $U$ we can 
+  WLOG assume $U$ is connected. 
+  Then for $\si \in G \minus \stab(x)$,
+  $\si(x) \notin U^x$ implies $\si U^x \cap U^x = \nothing$ 
+  since $U^x \iso U$ is connected.
+
+  $(1 \not\implies 2)$
+  Consider the $\Z/2\Z$-action \[
+    a \,\,\,\,\,\,\,\,\,\,\,\,\, b \longleftrightarrow c
+  \]
+  where $\set{a,b,c}$ is given discrete topology.
+  This satisfies $(1)$ but $a$ breaks $(2)$.
+  
+\end{proof1}
+
+\begin{prop}[``Fundamental Theorem of Galois Theory'']
+  
+  Let $\CCOV(B)$ be the category of connected coverings 
+  of a \emph{locally connected} $B \in \TOP$.
+  Let $X \in \CCOV(B)$ be Galois and $G := \AUT_B X$.
+  Consider $X \darrow \CCOV(B)$ and $\SUB\GRP(G)$.
+  Then we have an equivalence of categories : \footnote{
+    By considering $(X\darrow \CCOV(B))/\iso$ instead,
+    one obtains an isomorphism of categories.
+    Having to pick representatives many times in a proof 
+    feels dirty though. 
+  }
+  \begin{align*}
+    X\darrow\CCOV(B) &\to \SUB\GRP(G) \\
+    (X \to Y) &\mapsto \AUT_Y X
+  \end{align*}
+  Furthermore, for $X \to Y$ in $X\darrow \CCOV(B)$,
+  $Y \to B$ is Galois if and only if 
+  $\AUT_Y X$ is a normal subgroup of $\AUT_B X$.
+  In this case, we have the SES of groups : 
+  \[
+    1 \to \AUT_Y X \to \AUT_B X \to \AUT_B Y \to 1
+  \]
+\end{prop}
+\begin{proof}
+  
+  \textit{(Essentially Surjective)}
+  Let $H \in \SUB\GRP(G)$.
+  If $X \to X/H$ is a covering, 
+  then it is Galois : 
+  for $x_0 \in X$ an $\si_0 \in \AUT_{X/H} X$,
+  since $X \to B$ is Galois,
+  there exists $\si \in G$ such that $\si(x_0) = \si_0(x_0)$,
+  and hence $\si = \si_0 \in H$ by connectedness of $X$.
+  In particular, $H = \AUT_{X/H} X$.
+
+  So it suffices to prove $X \to X/H$ is a covering.
+  Since $X$ is connected and $B$ is locally connected,
+  the action of $G$ on $X$ is even.
+  This implies the action of $H$ on $X$ is also even 
+  and hence $X \to X/H$ is a covering. 
+  
+  \textit{(Faithful)}
+  Any $X \to Y$ in $X\darrow\CCOV(B)$ is a covering,
+  in particular a surjection and hence an epimorphism in $\CCOV(B)$.
+
+  \textit{(Full)}
+  Let $X \to Y$, $X \to Z$ in $X\darrow\CCOV(Z)$ such that 
+  $\AUT_Y X \subs \AUT_Z X$.
+  Then we have 
+  \begin{cd}
+      & Y \\
+    X \ar[ru] \ar[r] \ar[rd]
+      & X/\AUT_Y X \ar[u,dashed] \ar[d,dashed]\\
+      & Z
+  \end{cd}
+  It thus suffice that $X/\AUT_Y X \to Y$ is an isomorphism,
+  i.e. $X \to Y$ is Galois.
+  Let $x_0, x \in X$ be in the same fibre over $Y$
+  ($X$ non-empty because the empty case is trivial).
+  Then since $X \to B$ is Galois,
+  there exists $\si \in G$ such that $\si(x_0) = x$.
+  Now $\fall{}{Y} \circ \si$ and $\fall{}{Y}$ agree on $x_0$
+  and since $X$ is connected, 
+  we have $\si \in \AUT_Y X$.
+
+  \textit{(Furthermore)}
+  Let $X \to Y \in X\darrow\CCOV(B)$.
+  
+  Assuming $Y \to B$ Galois, 
+  we construct a group morphism $\AUT_B X \to \AUT_B Y$ 
+  with kernel $\AUT_Y X$.
+  \begin{lem}
+    Let $Y \to B$ be a connected Galois covering.
+  
+    Then for all connected coverings $X \to B$, 
+    $G$ acts freely and transitively on $\COV(B)(X,Y)$.\footnote{
+      I have a feeling this should also imply $Y \to B$ Galois,
+      but haven't proved it nor found a counter example. 
+    }
+    \begin{proof1}
+    Freeness follows from connectedness of $Y$ and the amazing lemma.
+    Now for transitive, let $\ph, \psi \in \COV(B)(X,Y)$.
+    Let $b \in B$ and $y \in Y$ in the fibre over it. 
+    (If $B = \nothing$, all is well.)
+    Then $\ph(y), \psi(y)$ are in the fibre over $b$,
+    so there exists $\si \in \AUT_B Y$ such that 
+    $\si(\ph(y)) = \psi(y)$.
+    It follows from connectedness of $Y$ and the amazing lemma 
+    that $\si \circ \ph = \psi$.
+    \end{proof1}
+  \end{lem}
+  The lemma gives a well-defined group morphism $\AUT_B X \to \AUT_B Y$,
+  which indeed has kernel $\AUT_Y X$.
+  
+  Now assume $\AUT_Y X$ is normal in $\AUT_B X$.
+  The following lemma is the essence : 
+  \begin{lem}[3rd Isomorphism theorem for Actions]
+    
+    Let $X \in G\SET$ for a group $G$, $H \in \SUB\GRP(G)$ normal.
+    Then $X/H$ inherits an action from $G/H$ and 
+    $(X/H)/(G/H)$ has the UP of $X/G$.
+    \begin{proof1}
+      For any $\si \in G$,
+      we have : 
+      \begin{cd}
+        X \ar[r,"\si"] \ar[d] & X \ar[d] \\
+        X/H \ar[r,"\bar{\si}"] & X/H
+      \end{cd}
+      where $\bar{\si}$ comes from the UP of $X/H$
+      since $\si H = H \si$ implies $X \to X \to X/H$ 
+      preserves the action of $H$.
+      This defines a $G$-action and hence a $G/H$-action on $X/H$
+      since $H$ acts trivially on $X/H$.
+
+      $(X/H)/(G/H)$ having the UP of $X/G$ is straightforward.
+    \end{proof1}
+  \end{lem}
+  We know that $X \to Y$ is isomorphic to $X \to X/\AUT_Y X$.
+  So by the lemma, $Y$ has an action from the quotient $\AUT_B X / \AUT_Y X$
+  and the corresponding quotient morphism is $Y \to B$.
+  This action is in fact faithful and hence 
+  $Y \to B$ is Galois. 
+
+\end{proof}
+\end{document}

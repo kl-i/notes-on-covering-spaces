@@ -1,0 +1,249 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+\begin{dfn}[Fundamental Groupoid, Fundamental Group]
+
+  Let $B \in \TOP$.
+  Define the \emph{fundamental groupoid of $B$}, $\Pi_1(B)$, to be 
+  following category : 
+  \begin{itemize}
+    \item $\Pi_1(B)$ has $B$ as its collection objects.
+    \item For $b, b_1 \in B$,
+    $\Pi_1(B)(b,b_1)$ consists of paths from $b$ to $b_1$ 
+    up to path-homotopy. 
+    \item Composition is concatenation of paths up-to-homotopy.
+    That this is well-defined and associative is an unenlightening exercise.
+    \item For $b \in B$, $\id{b}$ is the homotopy class of the 
+    constant path at $b$.
+  \end{itemize}
+  All morphisms of $\Pi_1 B$ are isomorphisms,
+  i.e. $\Pi_1 B$ is indeed a groupoid.
+  This gives a functor 
+  \[
+    \Pi_1 : \TOP \to \mathbf{Grpd}
+  \]
+  For $b \in B$, use $\pi_1(B,b)$ to denote the 
+  group of automorphisms of $b$ in $\Pi_1(B)$.
+  This is called the \emph{fundamental group of $B$ at $b$}.
+  This gives a commutative square of functors : 
+  \begin{cd}
+    \TOP* \ar[r,"\pi_1"] \ar[d]
+      & \GRP \ar[d] \\
+    \TOP \ar[r,"\Pi_1"]
+      & \mathbf{Grpd}
+  \end{cd}
+  where $\TOP*$ is pointed topological spaces.
+\end{dfn}
+
+\begin{dfn}[Covering]
+
+  Let $B \in \TOP$.
+  For $X \to B$ and $U \to B$ in $\TOP\darrow B$,
+  we say $U$ \emph{trivialises $X$} when 
+  there exists discrete $X_U \in \TOP$ satisfying the pullback diagram : 
+  \begin{cd}
+    X \ar[d]
+      & X_U \times U \ar[d] \ar[l] \\
+    B 
+      & U \ar[l,"\sups"]
+  \end{cd}
+  where the right vertical morphism is projection in the $U$-component.
+  In this case, we call $X_U$ the \emph{generic fibre over $U$}.
+
+  Define the \emph{category of coverings of $B$}, $\COV(B)$, as 
+  the full subcategory of $\TOP\darrow B$ consisting of 
+  $X \to B$ such that there exists a cover $\UU$ of $B$
+  consisting of opens that trivialise $X$.\footnote{
+    It is standard to require non-empty generic fibres,
+    however I have seen no use of this in the theory so 
+    have chosen to not include it. 
+  }
+  Objects of $\COV(B)$ are called \emph{coverings} of $B$.
+  When considering $\COV(B)$,
+  $B$ is referred to as the \emph{base space}.
+  
+\end{dfn}
+
+\begin{rmk}[Big Picture of Covering Spaces]
+  
+  The invariant we seek to understand is $\Pi_1 B$.
+  The actions of a group can tell a lot about the group.
+  The main result of covering spaces is that 
+  given sufficiently nice base space $B$,
+  covering spaces tell us everything about actions of the fundamental groupoid.
+  Formally, we have an equivalence of categories : 
+  \[
+    \COV(B) \simeq \SET^{\Pi_1 B}
+  \]
+  This is theoretically good,
+  but for computations we restrict attention to fundamental groups
+  so we can have group theory at our disposal.
+  Given a choice of $b \in B$,
+  we have a restriction functor : 
+  \[
+    \SET^{\Pi_1 B} \to \SET^{\pi_1(B,b)}
+  \]
+  Under additional assumptions on $B$,
+  this is an equivalence and will yield : 
+  \[
+    \COV(B) \simeq \SET^{\pi_1(B,b)}
+  \]
+  This is called the \emph{Galois theory of covering spaces}.
+
+\end{rmk}
+  
+\begin{prop}[Permenance Properties]
+  
+  The following are true : 
+  \begin{itemize}
+    \item (Base Change) 
+    Consider a pullback diagram in $\TOP$ : 
+    \begin{cd}
+      X \ar[d]
+        & Z \ar[d] \ar[l] \\
+      B 
+        & Y \ar[l]
+    \end{cd}
+    Then $X \to B$ covering implies $Z \to Y$ covering. 
+    The converse is false. 
+    \item (Composition)
+    Let $X \to Y \to B$ in $\TOP$.
+    Then $X \to Y$ and $Y \to B$ coverings
+    imply $X \to B$ is a covering. 
+    The converse is false. 
+    % \item (Partial Converse to Composition)\footnote{
+    %   This result is often used in expositions of covering spaces,
+    %   however we will not make use of this. 
+    % }
+    % Let $X \to Y \to B$ in $\TOP$.
+    % Assume $Y$ connected.
+    % Then $X \to B$, $Y \to B$ coverings imply
+    % $X \to Y$ is a covering.
+    %
+    % Hence,
+    % all morphisms between connected coverings over a base
+    % are coverings. 
+    \end{itemize}
+  
+\end{prop}
+\begin{proof}
+
+  \textit{(Base Change)}
+  We have the following commutative cube : 
+  \begin{cd}
+      & U \times X_U \ar[ld, tail] \ar[dd]
+        & 
+          & V \times X_U \ar[ll] \ar[ld, tail] \ar[dd]\\
+    X \ar[dd]
+      & 
+        & Z \ar[ll, crossing over] 
+          & \\
+      & U \ar[ld, tail]
+        & 
+          & V \ar[ld, tail] \ar[ll] \\
+    B 
+      & 
+        & Y \ar[ll] \ar[uu, leftarrow, crossing over]
+          & \\
+  \end{cd}
+  The faces that are pullback squares are : 
+  \begin{itemize}
+    \item front, by assumption.
+    \item bottom, which gives $V$ an open in $Y$.
+    \item left, where $U$ is a trivialising open of $X$ over $B$ and 
+    $X_U$ is a discrete space,
+    with $U \times X_U \to U$ being projection into first component. 
+    \item back, which follows easily. 
+    The projection $V \times X_U \to V$ is into the first component.
+  \end{itemize}
+  The left and back being pullback squares implies 
+  $V\times X_U$ is the pullback of 
+  $X, V$ over $B$,
+  and together with $Z$ being the pullback of $X,Y$ over $B$,
+  this implies $V\times X_U$ is the pullback of 
+  $Z, V$ over $Y$,
+  i.e. isomorphic to the preimage of $V$ under $Z \to Y$.
+  This gives $V$ as a trivialising open of $Z$ over $Y$.
+  We can hence obtain a trivialising cover for $Z$ over $Y$.
+
+  %Surjectivity of $Z \to Y$ follows easily from that of $X \to B$.
+  % It remains to show $Z \to Y$ is surjective. 
+  % Let $y : \bullet \to Y$ be a point of $Y$.
+  % It follows from this commutative cube :  
+  % \begin{cd}
+  %   & X\times_B \fall{B}{Y} y \ar[ld, tail] \ar[dd]
+  %     & 
+  %       & Z\times_Y y \ar[ll] \ar[ld, tail] \ar[dd]\\
+  % X \ar[dd]
+  %   & 
+  %     & Z \ar[ll, crossing over] 
+  %       & \\
+  %   & \bullet \ar[ld, tail]
+  %     & 
+  %       & \bullet \ar[ld, tail, "y"] \ar[ll] \\
+  % B 
+  %   & 
+  %     & Y \ar[ll] \ar[uu, leftarrow, crossing over]
+  %       & \\
+  % \end{cd}
+
+  \textit{(Composition)}
+  This is the diagram : 
+  \begin{cd}
+    X \ar[d]
+      & U \times X_U \times Y_U \ar[l,tail] \ar[d] \\
+    Y \ar[d]
+      & U \times Y_U \ar[d] \ar[l,tail] \\
+    B
+      & U \ar[l,tail]
+  \end{cd}
+  The bottom square is 
+  the pullback square of $X$ over $B$ along 
+  a trivialising open $U$ of $Y$ over $B$.
+  We can then shrink $U$ such that 
+  each $U \to U \times X_U \to Y$ is (isomorphic to) a trivializing open
+  of $X$ over $Y$,
+  hence the top square. 
+  Since $X_U, Y_U$ are discrete, $X_U \times Y_U$ is discrete as well.
+  The ``rectangle'' is a pullback diagram because 
+  the inner two are.
+  Thus $U$ is a trivialising open of $X$ over $B$.
+  This gives an open cover of $B$ trivialising $X$.
+
+  %Surjectivity is clear.
+
+  % \textit{(Partial Converse to Composition)}
+  % A common refinement of two open covers of $B$ trivialising $X,Y$ respectively
+  % will trivialise both $X,Y$.
+  % So let $\UU$ be an open cover of $B$ that trivialises both $X, Y$.
+  % For $U \in \UU$, we have 
+  % \begin{cd}
+  %   X \ar[d]
+  %     & U \times X_U \ar[l,tail] \ar[d] \\
+  %   Y \ar[d]
+  %     & U \times Y_U \ar[d] \ar[l,tail] \\
+  %   B
+  %     & U \ar[l,tail]
+  % \end{cd}
+  % where the bottom square and whole rectangle are pullback squares,
+  % and $X_U, Y_U$ discrete spaces.
+  % The above square is hence also a pullback square.
+  % Then the opens $U \to U \times Y_U \to Y$
+  % ranging over $U \in \UU$ give an open cover of $Y$
+  % trivialising $X$.
+  %
+  % Note that we have not used connectedness of $Y$ so far.
+  % We do to prove $X \to Y$ is surjective.
+  % Since $X \to Y$ is an open map,
+  % its image is open,
+  % so to show surjectivity it suffices $Y\minus \fall{}{} X$ be open
+  % by connectedness of $Y$.
+  % Let $y \in Y\minus\fall{}{} X$.
+  % There exists an open neighbourhood $U$ of $y$ 
+  % that trivialises $X$. 
+  % Since the fibre over $y$ is empty,
+  % it follows that $U \subs Y\minus \fall{}{} X$.
+
+\end{proof}
+
+\end{document}

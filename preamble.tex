@@ -27,6 +27,9 @@
 
 % % Local to this project
 \renewcommand\labelitemi{--} % Makes itemize use dashes instead of bullets
+\newcommand{\COV}{\mathbf{Cov}}
+\newcommand{\CCOV}{\mathbf{CCov}}
+\DeclareMathOperator{\FIB}{Fib}
 
 % % Misc
 \newcommand{\brkt}[1]{\left(#1\right)}
@@ -142,6 +145,7 @@
 \newcommand{\SH}{\mathbf{Sh}}
 \newcommand{\ORD}{\mathbf{Ord}}
 \newcommand{\POSET}{\mathbf{PoSet}}
+\newcommand{\SUB}{\mathbf{Sub}}
 \newcommand{\id}[1]{\mathbbm{1}_{#1}}
 \newcommand{\map}[2]{\yrightarrow[#2][2.5pt]{#1}[-1pt]}
 \newcommand{\iso}[1][]{\cong_{#1}}
@@ -179,8 +183,8 @@
 
 % % Galois
 \DeclareMathOperator{\gal}{Gal}
-\DeclareMathOperator{\Orb}{Orb}
-\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\orb}{Orb}
+\DeclareMathOperator{\stab}{Stab}
 \newcommand{\emb}[3]{\mathrm{Emb}_{#1}(#2, #3)}
 \newcommand{\Char}[1]{\mathrm{Char}#1}
 
@@ -255,7 +259,7 @@
 {}% space to indent
 {\it}% head font
 {.}% punctuation between head and body
-{ }% space after head
+{\newline}% space after head
 {\thmname{#1}\thmnote{ (#3)}}
 
 \newtheoremstyle{examplestyle}%
